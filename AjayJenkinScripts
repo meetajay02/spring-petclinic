@@ -30,27 +30,7 @@ pipeline
         {
             steps 
             {
-				dir("$("SRC_DIR")")
-				{
-					withSonarQubeEnv('localSonar')
-					{
-						bat 'mvn sonar:sonar'
-						
-						script 
-						{
-							def qualitygate=waitForQualityGate()
-							
-							if (qualitygate.status !="OK")
-							{
-								error "Pipeline aborted due to quality gate coverage failure: ${qualitygate.status}"
-							}
-							else
-							{
-								success "Everything OK"
-							}
-						}
-					}	
-				}
+				bat 'mvn sonar:sonar'
             }
         }
    }
